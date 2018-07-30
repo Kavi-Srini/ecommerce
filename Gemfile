@@ -24,6 +24,7 @@ gem 'devise'
 gem 'cancancan'
 gem 'carrierwave'
 gem 'pry-rails' #for rails c
+gem 'devise'
 
 
 # Use CoffeeScript for .coffee assets and views
