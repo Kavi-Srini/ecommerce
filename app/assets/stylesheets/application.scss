@@ -17,4 +17,16 @@
 @import "bootstrap";
 @import "font-awesome";
 
-
+body{
+     background-color: #f2dede;
+     padding-top: 60px;
+}
+.well{
+	background-color: #ffefef;
+}
+.modal-content{
+	background-color: #debed8;
+}
+#line_item{
+	text-indent: -30px;
+}
