@@ -1,6 +1,15 @@
 class ApplicationController < ActionController::Base
+	before_action :categories, :brands
+
 	before_action :configure_permitted_parameters, if: :devise_controller?
-	before_action :authenticate_user!
+
+	def categories
+		@categories = Category.order(:name)
+	end
+
+	def brands
+	  @brands = Product.pluck(:brand).sort.uniq
+	end
 
 	protected
 
