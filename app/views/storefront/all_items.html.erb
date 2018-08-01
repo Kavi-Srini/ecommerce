@@ -1,6 +1,11 @@
 <h1>Welcome to Tech Talent Store</h1>
 <p>Give us your money!</p>
-
+<div class="alert">
+	<%if alert %>
+		<%=alert %>
+	<%end %>
+</div>
 <div>
   <%=render 'productloop' %>
 </div>
+

@@ -1,15 +1,36 @@
 class CartController < ApplicationController
-before_action :authenticate_user!, except: [:add_to_cart, :view_order]
+	
+	before_action :authenticate_user!, except: [:add_to_cart, :view_order]
+
+
   def add_to_cart
-  	line_item = LineItem.create(product_id: params[:product_id], quantity: params[:quantity])
+  	line_item = LineItem.find_by(product_id: params[:product_id].to_i)
+  	if line_item.blank?
+  		line_item = LineItem.create(product_id: params[:product_id], quantity: params[:quantity])
+  	else
+  		old_quantity = line_item.quantity
+  		line_item.update(quantity: old_quantity + params[:quantity].to_i)
+  	end
 
-	  line_item.update(line_item_total: (line_item.quantity * line_item.product.price))
-
+  	line_item.update(line_item_total: (line_item.quantity * line_item.product.price))
 	  redirect_back(fallback_location: root_path)
+  end
+
+  def edit_quantity
+  	line_item = LineItem.find(params[:id].to_i)
+  	line_item.update(quantity: params[:quantity].to_i)
+  	line_item.update(line_item_total: (line_item.quantity * line_item.product.price))
+	  redirect_to view_order_path
   end
 
   def view_order
   	 @line_items = LineItem.all
+  end
+
+  def delete_item
+  	line_item = LineItem.find(params[:id].to_i)
+  	line_item.delete
+  	redirect_to view_order_path
   end
 
   def checkout
